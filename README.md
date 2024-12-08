@@ -1,4 +1,4 @@
-# 使用方法
+## 使用方法
 安裝或更新 git
 ```bash
 sudo apt install git

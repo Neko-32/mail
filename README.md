@@ -3,5 +3,5 @@
 git clone https://github.com/Neko-32/PiDoorNotifier.git
 ```
 ```bash
-python ./PiDoorNotifier/main.py
+python3 ./PiDoorNotifier/main.py
 ```

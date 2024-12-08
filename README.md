@@ -3,7 +3,7 @@
 ```bash
 sudo apt install git
 ```  
-使用 git 複製此項目
+使用 git 複製此儲存庫
 ```bash
 git clone https://github.com/Neko-32/PiDoorNotifier.git
 ```  

@@ -18,17 +18,19 @@ fi
 # 移動 PiDoorGmail 目錄
 if [ -d "$SCRIPT_DIR/PiDoorGmail" ]; then
     echo "正在移動 PiDoorGmail 到 $TARGET_DIR..."
-    sudo mv "$SCRIPT_DIR/PiDoorGmail" "$TARGET_DIR"
+    sudo cp "$SCRIPT_DIR/PiDoorGmail" "$TARGET_DIR"
 else
     echo "警告：PiDoorGmail 目錄未找到！"
 fi
 
-# 移動 22_is_very_oily 腳本
-if [ -f "$SCRIPT_DIR/22_is_very_oily" ]; then
-    echo "正在移動 22_is_very_oily 到 $TARGET_DIR..."
-    sudo mv "$SCRIPT_DIR/22_is_very_oily" "$TARGET_DIR"
+# 移動 22-is-very-oily 腳本
+if [ -f "$SCRIPT_DIR/22-is-very-oily" ]; then
+    echo "正在複製 22-is-very-oily 到 $TARGET_DIR..."
+    sudo cp "$SCRIPT_DIR/22-is-very-oily" "$TARGET_DIR"
+    chmod +x "$TARGET_DIR/22-is-very-oily"
 else
-    echo "警告：22_is_very_oily 腳本未找到！"
+    echo "警告：22-is-very-oily 腳本未找到！"
 fi
 
-echo "操作完成！"
+echo "安裝完成！ 
+輸入 22-is-very-oily 以執行此程式"

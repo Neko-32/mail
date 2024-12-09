@@ -7,11 +7,11 @@ sudo apt install git
 ```bash
 git clone https://github.com/Neko-32/PiDoorNotifier.git
 ```  
-安裝 Python 依賴項
+安裝
 ```bash
-pip3 install --upgrade google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
+chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
 ```  
 執行
 ```bash
-python3 ./PiDoorNotifier/main.py
+22-is-very-oily
 ```  

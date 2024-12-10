@@ -172,7 +172,7 @@ if __name__ == '__main__':
     # 檢查是否需要生成 credentials.json
     if not os.path.exists(CREDENTIALS_PATH):
         ask_user_for_credentials()
-
+    print("若連結沒有自動開啟，請自行複製貼上到瀏覽器中")
     gmail_service = get_gmail_service()
 
     # 獲取寄件人 Email

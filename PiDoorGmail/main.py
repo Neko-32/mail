@@ -13,6 +13,7 @@ import RPi.GPIO as GPIO
 import sys
 import termios
 import tty
+
 GPIO.setmode(GPIO.BOARD)
 
 S1     = 3
@@ -21,17 +22,6 @@ GPIO.setup(S1, GPIO.IN)
 GPIO.setup(S2, GPIO.IN) 
 S1_buffer = 0
 S2_buffer = 0
-
-def getch():
-    """讀取單個字符而不需要按 Enter"""
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setraw(fd)
-        ch = sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return ch
 
 # 添加必要的範圍
 SCOPES = [
@@ -165,36 +155,23 @@ if __name__ == '__main__':
 
     recipient_email = input("請輸入收件人 Email: ").strip()
 
-    print("程式啟動，按 I 更改收件人信箱，按 Q 結束。")
+    print("程式啟動")
 
     try:
         while True:
             time.sleep(0.001)
 
-            if GPIO.input(S1) == 0 and S1_buffer == 1:
+            if ((GPIO.input(S1) == 0) and (S1_buffer == 1)):
                 print("DOOR1 OPEN")
                 send_email(gmail_service, sender_email, recipient_email, "1 號門已開啟", "DOOR1 OPEN")
                 time.sleep(0.1)
             S1_buffer = GPIO.input(S1)
 
-            if GPIO.input(S2) == 0 and S2_buffer == 1:
+            if ((GPIO.input(S2) == 0) and (S2_buffer == 1)):
                 print("DOOR2 OPEN")
                 send_email(gmail_service, sender_email, recipient_email, "2 號門已開啟", "DOOR2 OPEN")
                 time.sleep(0.1)
             S2_buffer = GPIO.input(S2)
-
-            # 偵測使用者輸入
-            user_input = getch().upper()
-
-            if user_input == 'Q':
-                break
-            elif user_input == 'I':
-                recipient_email = input("收件人 Email: ").strip()
-            else:
-                print("無效的輸入，請輸入 I 或 Q。")
-
-    except KeyboardInterrupt:
-        print("KeyboardInterrupt detected. Exiting...")
 
     finally:
         cleanup()

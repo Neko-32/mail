@@ -159,7 +159,7 @@ if __name__ == '__main__':
         cleanup()
         exit(1)
 
-    print(f"將使用 {sender_email} 來發送郵件")
+    print("將使用 "+ Fore.LIGHTBLUE_EX + sender_email + Style.RESET_ALL + " 來發送郵件")
 
     recipient_email = input("請輸入收件人 Email: ").strip()
 

@@ -15,4 +15,4 @@ chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
 ```bash
 22-is-very-oily
 ```  
-若遇到 400/401 錯誤，請嘗試更換瀏覽器
+若遇到 400/401 錯誤，請嘗試更換/更新瀏覽器，或使用 VSCode 的 SSH 功能連線到樹梅派內進行操作

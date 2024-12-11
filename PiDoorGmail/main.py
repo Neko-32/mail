@@ -13,6 +13,14 @@ import RPi.GPIO as GPIO
 import sys
 import termios
 import tty
+from datetime import datetime
+from colorama import init, Fore, Style
+
+# 初始化 colorama
+init()
+
+# 取得當前時間並格式化為 [HH:MM] 形式
+now = Fore.GREEN + datetime.now().strftime("[%H:%M]") + Style.RESET_ALL
 
 GPIO.setmode(GPIO.BOARD)
 
@@ -87,7 +95,7 @@ def get_gmail_service():
         service = build('gmail', 'v1', credentials=creds)
         return service
     except HttpError as error:
-        print(f'An error occurred: {error}')
+        print(Fore.RED + f'An error occurred: {error}')
         return None
 
 
@@ -116,9 +124,9 @@ def send_email(service, sender, to, subject, message_text):
     try:
         message = create_message(sender, to, subject, message_text)
         sent_message = service.users().messages().send(userId="me", body=message).execute()
-        print(f'郵件發送成功')
+        print(now + ' 郵件發送成功')
     except HttpError as error:
-        print(f'An error occurred: {error}')
+        print(Fore.RED + f'An error occurred: {error}' + Style.RESET_ALL)
 
 
 def cleanup():
@@ -162,13 +170,13 @@ if __name__ == '__main__':
             time.sleep(0.001)
 
             if ((GPIO.input(S1) == 0) and (S1_buffer == 1)):
-                print("DOOR1 OPEN")
+                print(now + " DOOR1 OPEN")
                 send_email(gmail_service, sender_email, recipient_email, "1 號門已開啟", "DOOR1 OPEN")
                 time.sleep(0.1)
             S1_buffer = GPIO.input(S1)
 
             if ((GPIO.input(S2) == 0) and (S2_buffer == 1)):
-                print("DOOR2 OPEN")
+                print(now + " DOOR2 OPEN")
                 send_email(gmail_service, sender_email, recipient_email, "2 號門已開啟", "DOOR2 OPEN")
                 time.sleep(0.1)
             S2_buffer = GPIO.input(S2)

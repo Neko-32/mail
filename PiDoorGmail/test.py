@@ -10,47 +10,30 @@ import os
 import tempfile
 import time
 import sys
-import termios
-import tty
-import webbrowser
-import subprocess
-def open_browser(url):
-    try:
-        # 方法1：使用 webbrowser 模組
-        webbrowser.open(url)
-    except Exception as e:
+if os.name == 'nt':  # Windows系统
+    import msvcrt
+    def getch():
+        return msvcrt.getch().decode('utf-8').upper()
+else:  # Unix-like系统
+    import termios
+    import tty
+    def getch():
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
         try:
-            # 方法2：使用 xdg-open（在大多數 Linux 系統，包括樹莓派）
-            subprocess.run(['xdg-open', url], check=True)
-        except Exception as e2:
-            try:
-                # 方法3：直接指定常見瀏覽器
-                browsers = [
-                    'chromium-browser',
-                    'google-chrome',
-                    'firefox',
-                    'x-www-browser'
-                ]
-                
-                for browser in browsers:
-                    try:
-                        subprocess.run([browser, url], check=True)
-                        break
-                    except:
-                        continue
-            except Exception as e3:
-                print(f"無法開啟瀏覽器。錯誤：{e3}，請自行複製網址在瀏覽器打開")
+            tty.setraw(fd)
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch.upper()
+from datetime import datetime
+from colorama import init, Fore, Style
 
-def getch():
-    """讀取單個字符而不需要按 Enter"""
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setraw(fd)
-        ch = sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return ch
+# 初始化 colorama
+init()
+
+# 取得當前時間並格式化為 [HH:MM] 形式
+now = Fore.GREEN + datetime.now().strftime("[%H:%M]")+Style.RESET_ALL
 
 # 添加必要的範圍
 SCOPES = [
@@ -145,9 +128,9 @@ def send_email(service, sender, to, subject, message_text):
     try:
         message = create_message(sender, to, subject, message_text)
         sent_message = service.users().messages().send(userId="me", body=message).execute()
-        print(f'郵件發送成功')
+        print(now + ' 郵件發送成功')
     except HttpError as error:
-        print(f'An error occurred: {error}')
+        print(Fore.RED + f'An error occurred: {error}' + Style.RESET_ALL)
 
 
 def cleanup():
@@ -171,7 +154,6 @@ if __name__ == '__main__':
     # 檢查是否需要生成 credentials.json
     if not os.path.exists(CREDENTIALS_PATH):
         ask_user_for_credentials()
-    print("若連結沒有自動開啟，請自行複製貼上到瀏覽器中")
     gmail_service = get_gmail_service()
 
     # 獲取寄件人 Email
@@ -185,7 +167,7 @@ if __name__ == '__main__':
 
     recipient_email = input("請輸入收件人 Email: ").strip()
 
-    print("程式啟動，此為測試模式，按下 1 以模擬 1 號門開啟，按下 2 以模擬 2 號門開啟，按 I 更改收件人信箱，按 Q 結束。")
+    print("程式啟動，此為測試模式，按下 1 以模擬 1 號門開啟，按下 2 以模擬 2 號門開啟，按下 Q 以結束程式")
 
     try:
         while True:
@@ -194,21 +176,18 @@ if __name__ == '__main__':
             user_input = getch().upper()
 
             if user_input == '1':
-                print("DOOR1 OPEN")
+                print(now + " DOOR1 OPEN")
                 send_email(gmail_service, sender_email, recipient_email, "1 號門已開啟", "DOOR1 OPEN")
                 time.sleep(0.1)
 
             elif user_input == '2':
-                print("DOOR2 OPEN")
+                print(now + " DOOR2 OPEN")
                 send_email(gmail_service, sender_email, recipient_email, "2 號門已開啟", "DOOR2 OPEN")
                 time.sleep(0.1)
-
             elif user_input == 'Q':
+                print("程式結束")
                 break
 
-            elif user_input == 'I':
-                recipient_email = input("收件人 Email: ").strip()
-            
             else:
                 print("無效的輸入")
 

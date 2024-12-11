@@ -15,4 +15,4 @@ chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
 ```bash
 22-is-very-oily
 ```  
-若遇到 401 錯誤，請嘗試更換瀏覽器
+若遇到 400/401 錯誤，請嘗試更換瀏覽器

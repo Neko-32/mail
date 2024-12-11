@@ -13,34 +13,14 @@ import RPi.GPIO as GPIO
 import sys
 import termios
 import tty
-import webbrowser
-import subprocess
-def open_browser(url):
-    try:
-        # 方法1：使用 webbrowser 模組
-        webbrowser.open(url)
-    except Exception as e:
-        try:
-            # 方法2：使用 xdg-open（在大多數 Linux 系統，包括樹莓派）
-            subprocess.run(['xdg-open', url], check=True)
-        except Exception as e2:
-            try:
-                # 方法3：直接指定常見瀏覽器
-                browsers = [
-                    'chromium-browser',
-                    'google-chrome',
-                    'firefox',
-                    'x-www-browser'
-                ]
-                
-                for browser in browsers:
-                    try:
-                        subprocess.run([browser, url], check=True)
-                        break
-                    except:
-                        continue
-            except Exception as e3:
-                print(f"無法開啟瀏覽器。錯誤：{e3}，請自行複製網址在瀏覽器打開")
+GPIO.setmode(GPIO.BOARD)
+
+S1     = 3
+S2     = 5
+GPIO.setup(S1, GPIO.IN)
+GPIO.setup(S2, GPIO.IN) 
+S1_buffer = 0
+S2_buffer = 0
 
 def getch():
     """讀取單個字符而不需要按 Enter"""

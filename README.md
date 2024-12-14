@@ -20,7 +20,7 @@ chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
 22-is-very-oily -s
 ```
 若遇到 400/401 錯誤，那應該是樹梅派內建的瀏覽器的問題，請改用 SSH 連線至樹梅派上的方式進行操作  
-在 PowerShell 或 cmd 執行以下操作
+在 PowerShell 或 cmd 執行以下指令
 ```powershell
 ssh -L <port>:localhost:<port> <username>@<IP>
 ```

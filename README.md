@@ -25,7 +25,7 @@ chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
 ssh -L <port>:localhost:<port> <username>@<IP>
 ```
 在樹梅派上執行 `whoami` 和 `hostname -I` 取得 `username` 及 `IP`  
-`port` 處請輸入 1 ~ 65535 之間的任意整數，且 `:localhost:` 左右兩邊的數字必須是一樣的
+`port` 處請輸入 1 ~ 65535 之間的任意整數，且 `:localhost:` 左右兩邊的數字必須是一樣的   
 例如：  
 ```powershell
 ssh -L 8080:localhost:8080 pi@192.168.120.1

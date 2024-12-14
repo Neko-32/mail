@@ -14,5 +14,18 @@ chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
 執行
 ```bash
 22-is-very-oily
-```  
-若遇到 400/401 錯誤，請嘗試更換/更新瀏覽器，或使用 VSCode 的 SSH 功能連線到樹梅派內進行操作
+```
+附帶 -s 參數可以獲得驚喜  
+```bash
+22-is-very-oily -s
+```
+若遇到 400/401 錯誤，那應該是樹梅派內建的瀏覽器的問題請，請改用 SSH 連線至樹梅派上的方式進行操作  
+在 PowerShell 或 cmd 執行以下操作
+```powershell
+ssh -L <port>:localhost:<port> <username>@<IP>
+```
+`port` 處請輸入 1 ~ 65535 之間的任意整數，且 `:localhost:` 左右兩邊的數字必須是一樣的
+例如：  
+```powershell
+ssh -L 8080:localhost:8080 pi@192.168.120.1
+```

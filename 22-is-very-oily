@@ -1,1 +1,28 @@
-python3 /usr/local/bin/PiDoorGmail/main.py
+#!/bin/bash
+
+# 檢查是否提供了 -t 或 -s 參數
+while getopts "ts" opt; do
+  case $opt in
+    t)
+      # 測試模式，執行 test.py
+      PYTHON_SCRIPT="/usr/local/bin/PiDoorGmail/test.py"
+      ;;
+    s)
+      # 執行 curl ascii.live/rick
+      curl ascii.live/rick
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+# 如果沒有提供 -t 參數，則執行 main.py
+if [ -z "$PYTHON_SCRIPT" ]; then
+  PYTHON_SCRIPT="/usr/local/bin/PiDoorGmail/main.py"
+fi
+
+# 啟動 Python 腳本作為子進程
+python3 "$PYTHON_SCRIPT"

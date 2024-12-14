@@ -10,6 +10,7 @@ import os
 import tempfile
 import time
 import sys
+
 if os.name == 'nt':  # Windows系统
     import msvcrt
     def getch():
@@ -44,6 +45,7 @@ SCOPES = [
 # 定義檔案路徑
 CREDENTIALS_PATH = os.path.join(os.path.dirname(__file__), 'credentials.json')
 TOKEN_PATH = os.path.join(tempfile.gettempdir(), 'token.json')
+ASCII_ART_PATH = os.path.join(os.path.dirname(__file__), 'takodachi.txt')
 
 
 def ask_to_delete_token():
@@ -62,7 +64,9 @@ def ask_user_for_credentials():
     print("請輸入 Google API 的客戶端資訊：")
     client_id = input("Client ID: ").strip()
     client_secret = input("Client Secret: ").strip()
-    redirect_uris = ["http://localhost"]
+    redirect_uris = [
+            "http://localhost",
+        ]
 
     credentials_data = {
         "installed": {
@@ -79,7 +83,9 @@ def ask_user_for_credentials():
 
     print(f"已生成 {CREDENTIALS_PATH} 檔案！")
 
-
+def is_ssh_session():
+    """檢測是否為 SSH 會話"""
+    return 'SSH_CONNECTION' in os.environ or 'SSH_CLIENT' in os.environ
 def get_gmail_service():
     """初始化 Gmail API 服務"""
     creds = None
@@ -89,10 +95,37 @@ def get_gmail_service():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                CREDENTIALS_PATH, SCOPES
-            )
-            creds = flow.run_local_server(port=0)
+            # 檢測是否為 SSH 會話
+            if is_ssh_session():
+                while True:
+                    try:
+                        port = input("請輸入用於 OAuth 驗證的端口 (預設為 8080)，必須與你在 ssh 連線時輸入的端口相同: ").strip()
+                        port = int(port) if port else 8080
+                        
+                        flow = InstalledAppFlow.from_client_secrets_file(
+                            CREDENTIALS_PATH, SCOPES
+                        )
+                        creds = flow.run_local_server(
+                            port=port,
+                            open_browser=False,
+                            authorization_prompt_message='請使用 Ctrl + 滑鼠左鍵開啟連結： {url}'
+                        )
+                        break
+                    except ValueError:
+                        print("無效的端口號，請輸入一個有效的整數")
+                    except Exception as e:
+                        print(f"連接埠 {port} 已被占用或發生錯誤：{e}")
+                        sys.exit(1)
+            else:
+                # 本機執行，使用 port=0
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    CREDENTIALS_PATH, SCOPES
+                )
+                creds = flow.run_local_server(
+                    port=0,  # 自動選擇可用端口
+                    open_browser=False,
+                    authorization_prompt_message='請使用 Ctrl + 滑鼠左鍵開啟連結： {url}'
+                )
         with open(TOKEN_PATH, 'w') as token:
             token.write(creds.to_json())
     try:
@@ -148,9 +181,16 @@ def cleanup():
 
 
 if __name__ == '__main__':
+    # ASCII art 來源：https://emojicombos.com/hololiveen
+    # 打開文件並讀取內容
+    with open(ASCII_ART_PATH, 'r', encoding='utf-8') as file:
+        content = file.read()
+
+    # 打印文件內容
+    print(content)
     # 問是否刪除舊的 token.json
     ask_to_delete_token()
-
+    
     # 檢查是否需要生成 credentials.json
     if not os.path.exists(CREDENTIALS_PATH):
         ask_user_for_credentials()
@@ -161,9 +201,9 @@ if __name__ == '__main__':
     if not sender_email:
         print("無法獲取寄件人 Email，程式結束。")
         cleanup()
-        exit(1)
+        sys.exit(1)
 
-    print(f"將使用 {sender_email} 來發送郵件")
+    print("將使用 "+ Fore.LIGHTBLUE_EX + sender_email + Style.RESET_ALL + " 來發送郵件")
 
     recipient_email = input("請輸入收件人 Email: ").strip()
 

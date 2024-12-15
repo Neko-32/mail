@@ -31,4 +31,4 @@ ssh -L <port>:localhost:<port> <username>@<IP>
 ```powershell
 ssh -L 8080:localhost:8080 pi@192.168.120.1
 ```
-詳細請見：https://hackmd.io/@ncnu-opensource/1131-lsa-ssh
+ssh 詳細請見：https://hackmd.io/@ncnu-opensource/1131-lsa-ssh （非必要）

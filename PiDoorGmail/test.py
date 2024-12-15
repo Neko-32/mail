@@ -123,7 +123,7 @@ def get_gmail_service():
                 )
                 creds = flow.run_local_server(
                     port=0,  # 自動選擇可用端口
-                    open_browser=False,
+                    open_browser=True,
                     authorization_prompt_message='請使用 Ctrl + 滑鼠左鍵開啟連結： {url}'
                 )
         with open(TOKEN_PATH, 'w') as token:

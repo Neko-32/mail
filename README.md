@@ -1,16 +1,19 @@
 ## 使用方法
-安裝 git
+
+在 cmd 執行以下指令（Windows）
+```powershell
+ssh -L <port>:localhost:<port> <username>@<IP>
+```
+`port`（端口） 處請輸入 1 ~ 65535 之間的任意整數，且 `:localhost:` 左右兩邊的數字必須是一樣的，例如：  
+```powershell
+ssh -L 8080:localhost:8080 pi@192.168.120.1
+```
+
+安裝 git & 使用 git 複製此儲存庫 & 安裝（複製貼上就對了）
 ```bash
-sudo apt install git
+sudo apt install git && git clone https://github.com/Neko-32/PiDoorNotifier.git && chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
 ```  
-使用 git 複製此儲存庫
-```bash
-git clone https://github.com/Neko-32/PiDoorNotifier.git
-```  
-安裝
-```bash
-chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
-```  
+
 執行
 ```bash
 22-is-very-oily
@@ -19,16 +22,3 @@ chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
 ```bash
 22-is-very-oily -s
 ```
-若遇到 400/401 錯誤，那應該是樹梅派內建的瀏覽器的問題，請改用 SSH 連線至樹梅派上的方式進行操作  
-
-在 cmd 執行以下指令（Windows）
-```powershell
-ssh -L <port>:localhost:<port> <username>@<IP>
-```
-在樹梅派上執行 `whoami` 和 `hostname -I` 取得 `username` 及 `IP`  
-
-`port` 處請輸入 1 ~ 65535 之間的任意整數，且 `:localhost:` 左右兩邊的數字必須是一樣的，例如：  
-```powershell
-ssh -L 8080:localhost:8080 pi@192.168.120.1
-```
-ssh 詳細請見：https://hackmd.io/@ncnu-opensource/1131-lsa-ssh （非必要）

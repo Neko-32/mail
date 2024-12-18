@@ -15,7 +15,7 @@ chmod +x ./PiDoorNotifier/install.sh && ./PiDoorNotifier/install.sh
 ```bash
 22-is-very-oily
 ```
-附帶 -s 參數可以獲得驚喜  
+附帶 -s 參數可以獲得驚喜（某些機器好像看不了）  
 ```bash
 22-is-very-oily -s
 ```

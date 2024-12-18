@@ -24,8 +24,8 @@ sudo apt install git && git clone https://github.com/Neko-32/PiDoorNotifier.git 
 
 詳細請見：
   - [絶対強者の殿堂へ：Linux 領域展開！](https://youtu.be/1oV5tCH5raY)
-  - [SSH 遠端連線](https://hackmd.io/@jiazheng/ByLzJIvlkl)
-  - [Gmail API](https://developers.google.com/gmail/api/guides?hl=zh-tw)
+  - [SSH 遠端連線 - HackMD](https://hackmd.io/@jiazheng/ByLzJIvlkl)
+  - [Gmail API 總覽](https://developers.google.com/gmail/api/guides?hl=zh-tw)
 
 ![image](https://raw.githubusercontent.com/Neko-32/Neko-32/refs/heads/main/396451274-db82f439-e382-4ead-b998-f24824a8b7e5.png)  
 最後這張圖只是附給那些說 Linux 爛的人看的

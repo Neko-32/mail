@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install curl -y || sudo apt install curl --fix-missing -y
+
 # 安裝 Python 依賴項
 pip3 install --upgrade google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client colorama
 if [ $? -ne 0 ]; then

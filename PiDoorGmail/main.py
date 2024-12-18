@@ -90,7 +90,7 @@ def get_gmail_service():
             if is_ssh_session():
                 while True:
                     try:
-                        port = input("請輸入用於 OAuth 驗證的端口 (預設為 8080)，必須與你在 ssh 連線時輸入的端口相同: ").strip()
+                        port = input("請輸入你剛剛 SSH 時輸入的端口： ").strip()
                         port = int(port) if port else 8080
                         
                         flow = InstalledAppFlow.from_client_secrets_file(

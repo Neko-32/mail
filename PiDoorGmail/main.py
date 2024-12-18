@@ -99,7 +99,7 @@ def get_gmail_service():
                         creds = flow.run_local_server(
                             port=port,
                             open_browser=False,
-                            authorization_prompt_message='請使用 Ctrl + 滑鼠左鍵開啟連結： {url}'
+                            authorization_prompt_message='請在瀏覽器開啟此連結： {url}'
                         )
                         break
                     except ValueError:

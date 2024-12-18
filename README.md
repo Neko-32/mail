@@ -32,6 +32,3 @@ ssh -L <port>:localhost:<port> <username>@<IP>
 ssh -L 8080:localhost:8080 pi@192.168.120.1
 ```
 ssh 詳細請見：https://hackmd.io/@ncnu-opensource/1131-lsa-ssh （非必要）
-
-![2tqz53ykkzoc1](https://github.com/user-attachments/assets/db82f439-e382-4ead-b998-f24824a8b7e5)  
-最後這張圖只是附給那些說 Linux 爛的人看的

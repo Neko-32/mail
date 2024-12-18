@@ -2,7 +2,7 @@
 
 在 cmd 執行以下指令，端口處請改成 1 ~ 65535 內的任意整數
 ```powershell
-ssh -L 端口:localhost:端口 pi@你樹梅派的 IP
+ssh -L 端口:localhost:端口 pi@你樹梅派的IP
 ```
 安裝 git & 使用 git 複製此儲存庫 & 安裝（複製貼上就對了）
 ```bash

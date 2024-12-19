@@ -2,10 +2,11 @@
 
 由於在樹梅派內建的瀏覽器進行 OAuth 驗證時會出現錯誤，因此改用 SSH 連線，在教室電腦上進行驗證  
 
-在 cmd 執行以下指令，端口處請改成 1 ~ 65535 內的任意整數，且左右兩邊必須一樣
+在 cmd 或 powershell 執行以下指令，端口處請改成 1 ~ 65535 內的任意整數，且左右兩邊必須一樣
 ```
 ssh -L 端口:localhost:端口 pi@你樹梅派的IP
 ```
+如果嫌 Windows 10 內建的 Terminal 難用可以下載新版的 [Windows Terminal](https://github.com/microsoft/terminal)
 
 安裝 git & 使用 git 複製此儲存庫 & 安裝（複製貼上就對了）
 ```bash
